@@ -1,0 +1,16 @@
+{
+    "usuarios": {
+        "indice": 2,
+        "datos": [
+            {
+                "usuario": "carus leo",
+                "pass": "1234 asdf",
+                "id": 2
+            }
+        ]
+    },
+    "menus": {
+        "indice": 0,
+        "datos": []
+    }
+}
