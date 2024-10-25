@@ -1,24 +1,33 @@
 const controller = {};
 const db = require("../db");
 
-controller.get = async function(req, res){
-    let usuario = {
-        "usuario": "franco",
-        "pass": "pepe"
-    };
-
-    await db.add("usuarios", usuario);
-
-    res.send("hola");
-}
-
-controller.remove = async (req, res)=>{
-    await db.remove("usaurios", 1);
-    res.send("eliminado")
-}
 
 controller.all = async (req, res)=>{
     res.json(await db.find("usuarios", x => x.id == 5));
+}
+
+controller.one = async(req, res)=>{
+    res.json(await db.find("usuarios", x => x.id == req.params.id));
+}
+
+controller.create = async(req, res)=>{
+    var usuario = req.body;
+    await db.add("usuarios", usuario);
+
+    res.send(usuario);
+}
+
+controller.alter = async(req, res)=>{
+    var usuario = req.body;
+    console.log(req.params)
+    await db.update("usuarios", req.params.id, usuario);
+    res.send(usuario);
+}
+
+controller.delete = async(req, res)=>{
+    console.log(req.params.id);
+    await db.remove("usuarios", req.params.id);
+    res.send();
 }
 
 module.exports = controller;

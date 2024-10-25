@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 let usaurio = require('./app/Usuario/route');
 
-app.use("/usuario", usaurio);
+app.use("/usuario", usaurio)
 
 app.listen(3001, ()=>{
     console.log("listen in port 3001")

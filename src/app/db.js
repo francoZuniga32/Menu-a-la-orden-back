@@ -7,12 +7,9 @@ const dbocontroller = {};
 
 dbocontroller.find = async (table, where)=>{
     //ahora buscamos en el json
-    let datos = await db.get(table)
-    console.log(datos, where);
+    let datos = await db.get(table).datos;
     if(datos != null){
-        let retorno = datos.filter(where);
-        console.log(retorno);
-        return retorno;
+        return datos.filter(where);
     }else{
         return false;
     }
@@ -20,13 +17,14 @@ dbocontroller.find = async (table, where)=>{
 
 dbocontroller.add = async (table,object)=>{
     //ahora buscamos en el json
-    let datos = await db.get(table)
-    console.log(datos);
-    if(datos != null){
-        object.id = datos.length + 1;
-        console.log(object, datos);
-        datos.push(object);
-        await db.set(table, datos);
+    let esquema = await db.get(table)
+    console.log(esquema);
+    if(esquema != null){
+        object.id = esquema.indice + 1;
+        esquema.indice++
+        console.log(object, esquema.datos);
+        esquema.datos.push(object);
+        await db.set(table, esquema);
         await db.sync();
         return true;
     }else{
@@ -36,14 +34,14 @@ dbocontroller.add = async (table,object)=>{
 
 dbocontroller.remove =  async (table, id)=>{
     //ahora buscamos en el json
-    let datos = await db.get(table)
-    if(datos != null){
-        let dato = datos.find(x => x.id == id);
-        let ideliminar = datos.indexOf(dato);
+    let esquema = await db.get(table)
+    if(esquema != null){
+        let dato = esquema.datos.find(x => x.id == id);
+        let ideliminar = esquema.datos.indexOf(dato);
         if(dato){
-            datos.slice(ideliminar, 1);
-            console.log(datos);
-            await db.set(table, datos);
+            esquema.datos.splice(ideliminar, 1);
+            console.log(ideliminar, esquema.datos);
+            await db.set(table, esquema);
             await db.sync();
             
             return true;
@@ -57,14 +55,14 @@ dbocontroller.remove =  async (table, id)=>{
 
 dbocontroller.update = async (table, id, object)=>{
     //ahora buscamos en el json
-    let datos = await db.get(table)
-    if(datos != null){
-        let dato = datos.find(x => x.id == id);
+    let esquema = await db.get(table)
+    if(esquema != null){
+        let dato = esquema.datos.find(x => x.id == id);
+        
         if(dato){
             object.id = dato.id;
-            datos.remove(dato);
-            datos.add(object);
-            await db.set(table, datos)
+            esquema.datos[esquema.datos.indexOf(dato)] = object;
+            await db.set(table, esquema)
             await db.sync();
             return true;
         }else{
