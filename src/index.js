@@ -5,10 +5,13 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static(__dirname+"/public"));
 
-let usaurio = require('./app/Usuario/route');
+let usuario = require('./app/Usuario/route');
+let upload = require('./app/Archivo/route')
 
-app.use("/usuario", usaurio)
+app.use("/usuario", usuario);
+app.use("/upload", upload);
 
 app.listen(3001, ()=>{
     console.log("listen in port 3001")
