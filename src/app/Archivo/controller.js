@@ -19,7 +19,7 @@ function multerConfStorage(inputName, tipes, storage) {
     return multer({
         storage: storage,
         fileFilter: function (req, file, callback) {
-            var ext = path.extname(file.originalname);
+            var ext = path.extname(Date.now().toString()+file.originalname);
             if (tipes.indexOf(ext) < 0) {
                 return callback(new Error(`Only ${tipes.join(", ")} are allowed`));
             }
@@ -40,14 +40,14 @@ function encriptfile(filename) {
 
 controller.load = async (req, res, next) => {
     try {
-        multerConf("miniatura", [".pdf",".png", ".jpeg", ".jpg"], "minuatura")(
+        multerConf("miniatura", [".png", ".jpeg", ".jpg"], "minuatura")(
           req,
           res,
           async (err) => {
             if (err) {
               console.log(err);
             }
-            
+            console.log(Date.now().toString());
             res.status(200).send(req.file);
           }
         );

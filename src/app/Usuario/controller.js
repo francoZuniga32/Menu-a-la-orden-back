@@ -3,7 +3,7 @@ const db = require("../db");
 
 
 controller.all = async (req, res)=>{
-    res.json(await db.find("usuarios", x => x.id == 5));
+    res.json(await db.find("usuarios", x => true));
 }
 
 controller.one = async(req, res)=>{
@@ -11,14 +11,14 @@ controller.one = async(req, res)=>{
 }
 
 controller.create = async(req, res)=>{
-    var usuario = req.body;
+    let usuario = req.body;
     await db.add("usuarios", usuario);
 
     res.send(usuario);
 }
 
 controller.alter = async(req, res)=>{
-    var usuario = req.body;
+    let usuario = req.body;
     console.log(req.params)
     await db.update("usuarios", req.params.id, usuario);
     res.send(usuario);
