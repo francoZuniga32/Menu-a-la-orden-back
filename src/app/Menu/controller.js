@@ -22,6 +22,7 @@ controller.post = async function(req, res){
 
 controller.put = async function(req, res){
     let menu = await Menus.update(req.params.id, req.body);
+    console.log("editar");
     res.send(menu);
 }
 

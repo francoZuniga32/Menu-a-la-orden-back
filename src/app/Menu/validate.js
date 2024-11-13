@@ -10,7 +10,7 @@ const validaciones = {
                 titulo: Joi.string().required(),
                 precio: Joi.number().required(),
                 descripcion: Joi.string().required(),
-                foto: Joi.string().required()
+                foto: Joi.string().allow('')
             })
         )
     })

@@ -37,6 +37,7 @@ dbocontroller.add = async (table,object)=>{
 dbocontroller.remove =  async (table, id)=>{
     //ahora buscamos en el json
     let esquema = await db.get(table)
+    console.log(esquema);
     if(esquema != null){
         let dato = esquema.datos.find(x => x.id == id);
         let ideliminar = esquema.datos.indexOf(dato);
