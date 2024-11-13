@@ -1,5 +1,5 @@
 const controller = {};
-const db = require("../db");
+const db = require("../../db/source/db");
 
 
 controller.all = async (req, res)=>{

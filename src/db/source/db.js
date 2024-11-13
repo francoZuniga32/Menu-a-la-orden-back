@@ -1,13 +1,15 @@
 const JSONdb = require('simple-json-db');
 const path = require("path");
 
-const db = new JSONdb(path.join(__dirname, "../../../data/db.json"));
+const db = new JSONdb(path.join(__dirname, "../../../../data/db.json"));
 
 const dbocontroller = {};
 
 dbocontroller.find = async (table, where)=>{
     //ahora buscamos en el json
     let datos = await db.get(table).datos;
+    console.log(datos);
+
     if(datos != null){
         return datos.filter(where);
     }else{
