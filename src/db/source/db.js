@@ -20,7 +20,6 @@ dbocontroller.find = async (table, where)=>{
 dbocontroller.add = async (table,object)=>{
     //ahora buscamos en el json
     let esquema = await db.get(table)
-    console.log(esquema);
     if(esquema != null){
         object.id = esquema.indice + 1;
         esquema.indice++
