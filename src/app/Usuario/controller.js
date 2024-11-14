@@ -30,4 +30,33 @@ controller.delete = async(req, res)=>{
     res.send();
 }
 
+ controller.login = async (req, res) => {
+    const { username, password } = req.body; // esto separa las variables del req y las almacena en cada const username y password nashe
+    const user = await db.find("usuarios", x => x.username === username && x.password === password); // esto esta feo e inseguro pero weno
+    
+    if (user) {
+        res.status(200).json({ message: "Login exitoso" });
+    } else {
+        res.status(401).json({ message: "Usuario o contraseña incorrectos" });
+    }
+}; 
+
+controller.register = async (req, res) => {
+    const { username, password } = req.body; // Extrae los datos del nuevo usuario
+
+    // Comprueba si el usuario ya existe
+    const existeUsuario = await db.find("usuarios", x => x.username === username);
+
+    if (existeUsuario) {
+        // Si el usuario ya existe, devuelve un error
+        res.status(409).json({ message: "El usuario ya está registrado" });
+    } else {
+        // Si el usuario no existe, crea el nuevo usuario
+        const nuevoUsuario = { id: Date.now(), username, password }; // Genera un id único para el usuario
+        await db.add("usuarios", nuevoUsuario); // CHECK ESTO ,esta parte la hizo gpt xd
+
+        res.status(201).json({ message: "Registro exitoso", user: nuevoUsuario });
+    }
+};
+
 module.exports = controller;

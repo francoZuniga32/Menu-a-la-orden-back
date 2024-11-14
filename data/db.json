@@ -5,12 +5,17 @@
             {
                 "usuario": "carus leo",
                 "pass": "1234 asdf",
+                "id": 1
+            },
+            {
+                "usuario": "fmarquez",
+                "pass": "crack",
                 "id": 2
             }
         ]
     },
     "menus": {
-        "indice": 9,
+        "indice": 0,
         "datos": []
     }
 }
