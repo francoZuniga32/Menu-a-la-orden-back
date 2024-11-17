@@ -33,7 +33,7 @@ controller.delete = async(req, res)=>{
 
  controller.login = async (req, res) => {
     const { username, password } = req.body; // esto separa las variables del req y las almacena en cada const username y password nashe
-    var user = await Usuario.get(x => x.username === username && x.password === password); // esto esta feo e inseguro pero weno
+    var user = await Usuario.get    (x => x.username === username && x.password === password); // esto esta feo e inseguro pero weno
     console.log(user);
 
     if (user.length > 0) {

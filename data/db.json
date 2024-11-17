@@ -5,17 +5,34 @@
             {
                 "usuario": "carus leo",
                 "pass": "1234 asdf",
-                "id": 1
-            },
-            {
-                "usuario": "fmarquez",
-                "pass": "crack",
                 "id": 2
             }
         ]
     },
     "menus": {
-        "indice": 0,
-        "datos": []
+        "indice": 9,
+        "datos": [
+            {
+                "nombre": "Nuevo menu 2",
+                "template": "template_1.css",
+                "items": [
+                    {
+                        "id": 3,
+                        "titulo": "nuevo item",
+                        "precio": "200",
+                        "descripcion": "<p>asdf</p>\n",
+                        "foto": "http://localhost:3001/f90d2d9ead6333ccd1fd8527900cfb7667b9a5b2.png"
+                    },
+                    {
+                        "id": 2,
+                        "titulo": "piña colada",
+                        "precio": "2000",
+                        "descripcion": "\n\n                                    ",
+                        "foto": "http://localhost:3001/4cafa84014c3a10abd36696f214a7c35bcb9b2b0.jpeg"
+                    }
+                ],
+                "id": 9
+            }
+        ]
     }
 }
