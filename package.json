@@ -20,6 +20,6 @@
     "simple-json-db": "^2.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.9"
   }
 }

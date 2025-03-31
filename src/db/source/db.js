@@ -8,8 +8,7 @@ const dbocontroller = {};
 dbocontroller.find = async (table, where)=>{
     //ahora buscamos en el json
     let datos = await db.get(table).datos;
-    console.log(datos);
-
+    
     if(datos != null){
         return datos.filter(where);
     }else{
