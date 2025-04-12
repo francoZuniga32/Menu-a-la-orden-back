@@ -3,17 +3,25 @@ const db = require("../../db/source/db");
 const Usaurio = require("../../db/models/Usuario");
 const Usuario = require("../../db/models/Usuario");
 
+const {DataTypes, where} = require('sequelize');
+const sequelize = require('../../database/index.js');
+const User = require('../../database/models/user')(sequelize, DataTypes);
+
 controller.all = async (req, res)=>{
-    res.json(await db.find("usuarios", x => true));
+    res.json(await User.findAll());
 }
 
 controller.one = async(req, res)=>{
-    res.json(await db.find("usuarios", x => x.id == req.params.id));
+    res.json(await User.findOne({
+        where : {
+            id : req.params.id
+        }
+    }));
 }
 
 controller.create = async(req, res)=>{
     let usuario = req.body;
-    await db.add("usuarios", usuario);
+    await User.create(usuario);
 
     res.send(usuario);
 }
@@ -21,44 +29,43 @@ controller.create = async(req, res)=>{
 controller.alter = async(req, res)=>{
     let usuario = req.body;
     console.log(req.params)
-    await db.update("usuarios", req.params.id, usuario);
-    res.send(usuario);
+
+    let usaurioUpdate = await User.update(usuario,{
+        where:{
+            id: parseInt(req.params.id)
+        }
+    })
+    res.send(usaurioUpdate);
 }
 
 controller.delete = async(req, res)=>{
     console.log(req.params.id);
-    await db.remove("usuarios", req.params.id);
+    await User.delete({
+        id: parseInt(req.params.id)
+    })
     res.send();
 }
 
  controller.login = async (req, res) => {
     const { username, password } = req.body; // esto separa las variables del req y las almacena en cada const username y password nashe
     console.log(username, password);
-    var user = await Usuario.get(x => x.username === username && x.password === password); // esto esta feo e inseguro pero weno
+    var user = await User.findOne({
+        where:{
+            username: username,
+            password: password
+        }
+    }) // esto esta feo e inseguro pero weno
     console.log(user);
 
-    if (user.length > 0) {
+    if (user) {
         res.status(200).json({ message: "Login exitoso" });
     } else {
         res.status(401).json({ message: "Usuario o contraseña incorrectos" });
     }
 }; 
 
-controller.register = async (req, res) => {
-    const { username, password } = req.body; // Extrae los datos del nuevo usuario
-
-    // Comprueba si el usuario ya existe
-    let existeUsuario = await Usuario.get(x => x.username == username );
-
-    if (existeUsuario.length > 0) {
-        // Si el usuario ya existe, devuelve un error
-        res.status(409).json({ message: "El usuario ya está registrado" });
-    } else {
-        // Si el usuario no existe, crea el nuevo usuario
-        let nuevoUsuario = await Usaurio.add(req.body);
-        console.log(nuevoUsuario);
-        res.status(201).json({ message: "Registro exitoso", user: nuevoUsuario });
-    }
-};
+controller.nuevo = async (req, res)=>{
+    res.send(await User.findAll())
+}
 
 module.exports = controller;

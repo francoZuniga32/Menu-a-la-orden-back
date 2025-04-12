@@ -1,5 +1,7 @@
 #!/bin/bash
 
 cp -r data ../
-
-npm install && npm run dev
+npm install 
+# corremos las migraciones 
+cd src/database
+npx sequelize-cli db:migrate

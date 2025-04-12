@@ -9,10 +9,20 @@ npm run iniciar
 npm run dev
 ```
 
-## Configuracion de la db
+## Api
 
-mueva la carpeta data a un nivel superior esto es tiene que quedar al mismo nivel que la carpeta del proyecto.
-esto es para que las actualizaciones del archivo db.json no interfieran con nodemon (entra en bucle infinito).
+|ruta|descripcion|metodo|body|
+|---|---|---|---|
+|/usuario/|creamos un usuario nuevo|POST|{username: string,password:string,nombre: string,apellidos: string, email: string}|
+|/usuario/:id| editamos un usuario|PUT|{username: string,password:string,nombre: string,apellidos: string, email: string}|
+|/usuario/:id| eliminamos un usuario | DELETE||
+|/usuario/login| realizamos el login de un usuario| POST |{username: string,password:string}|
+|/menu/| mostramos todos los menus disponibles | GET | |
+|/menu/:id| mostramos un menu por su id | GET ||
+|/menu/| creamos un menu nuevo | POST | {nombre: string, template: string}|
+|/menu/:id| editamos un menu por su id | PUT | {nombre: string, template: string}|
+|/menu/items/| agregamos un item al menu | POST | {items:[ { id: 0,titulo: string, precio: number, descripcion: string, foto: rutafoto,idMenu: number,  },... ]}|
+|/upload/| cargamos una imagen a el sistema | POST - Multipart Form | miniatura: file|
 
 ## Docker compose
 

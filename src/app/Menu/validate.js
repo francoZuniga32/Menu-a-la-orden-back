@@ -13,8 +13,24 @@ const validaciones = {
                 foto: Joi.string().allow('')
             })
         )
+    }),
+    menu: Joi.object({
+        nombre: Joi.string().required(),
+        template: Joi.string().required(),
+       
+    }),
+    items: Joi.object({
+        items: Joi.array().required().items(
+            Joi.object({
+                id: Joi.number().required(),    
+                titulo: Joi.string().required(),
+                precio: Joi.number().required(),
+                descripcion: Joi.string().required(),
+                foto: Joi.string().allow(''),
+                idMenu: Joi.number().required(),    
+            })
+        )
     })
-    
 }
 
 module.exports = validaciones;
