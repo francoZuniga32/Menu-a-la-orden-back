@@ -35,10 +35,21 @@ controller.one = async function(req, res){
         include:[
             {
                 model: Items,
-                as: "asItems"
+                as: "items"
             }
         ]
     });
+    res.send(data);
+}
+
+controller.usuario = async function(req, res){
+    let id = req.params.id;
+    let data = await Menu.findAll({
+        where:{
+            idUsuario: id
+        }
+    });
+    console.log(id, data);
     res.send(data);
 }
 
@@ -49,9 +60,12 @@ controller.one = async function(req, res){
 controller.post = async function(req, res){
     const t = await sequelize.transaction();
     try{
+        console.log(req.body);
+
         let menu = {
             nombre : req.body.nombre,
             template: req.body.template,
+            idUsuario: req.body.idUsuario,
             createdAt: new Date(),
             updatedAt: new Date()
         };
@@ -64,8 +78,8 @@ controller.post = async function(req, res){
         res.send(menuCreado);
 
     }catch(err){
-          // We rollback the transaction.
-          console.log(err);
+        // We rollback the transaction.
+        console.log(err);
         await t.rollback();
         res.status(400).send({err});
     }
@@ -119,6 +133,7 @@ controller.put = async function(req, res){
 controller.addItem = async function(req, res){
     const t = await sequelize.transaction();
     try{
+        console.log(req.body.items);
         req.body.items.map( x => delete x.id);
         var insertados = await Items.bulkCreate(req.body.items, {
             transaction: t

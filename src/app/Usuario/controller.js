@@ -7,6 +7,11 @@ const {DataTypes, where} = require('sequelize');
 const sequelize = require('../../database/index.js');
 const User = require('../../database/models/user')(sequelize, DataTypes);
 
+require('dotenv').config();
+
+const jwt = require('jsonwebtoken');
+const secretKey = process.env.key;
+
 controller.all = async (req, res)=>{
     res.json(await User.findAll());
 }
@@ -58,9 +63,19 @@ controller.delete = async(req, res)=>{
     console.log(user);
 
     if (user) {
-        res.status(200).json({ message: "Login exitoso" });
+        const token = jwt.sign(
+            { user: user },
+            secretKey,
+            { expiresIn: '1h' }
+        );
+        
+        res.status(200).json({
+            user: user,
+            token: token
+        });
+
     } else {
-        res.status(401).json({ message: "Usuario o contraseña incorrectos" });
+        res.status(403).json({ message: "Usuario o contraseña incorrectos" });
     }
 }; 
 
