@@ -10,12 +10,12 @@ route.get("/", controller.get);
 route.get("/:id", controller.one);
 route.get("/usuario/:id", controller.usuario);
 
-route.post("/", validate(validaciones.menu), controller.post);
-route.put('/:id', validate(validaciones.menu), controller.put);
+route.post("/", validate(validaciones.menu), auth, controller.post);
+route.put('/:id', validate(validaciones.menu), auth,controller.put);
 
-route.post("/items/", validate(validaciones.items), controller.addItem);
-route.delete("/items/", validate(validaciones.items), controller.removeItem);
+route.post("/items/", validate(validaciones.items),  auth, controller.addItem);
+route.delete("/items/", validate(validaciones.items), auth, controller.removeItem);
 
-route.delete('/:id', controller.remove);
+route.delete('/:id', auth, controller.remove);
 
 module.exports = route;

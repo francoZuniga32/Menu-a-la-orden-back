@@ -6,7 +6,7 @@ const auth = require('../../middleware/auth');
 
 //route.get("/", controller.all);
 //route.get("/:id", controller.one);
-route.post("/", validate(validaciones.alta), auth, controller.create);
+route.post("/", validate(validaciones.alta), controller.create);
 route.put("/:id", validate(validaciones.alta), auth, controller.alter);
 route.delete("/:id", auth, controller.delete);
 

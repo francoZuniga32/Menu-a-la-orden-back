@@ -1,9 +1,8 @@
 const controller = {};
 const db = require("../../db/source/db");
-const Usaurio = require("../../db/models/Usuario");
 const Usuario = require("../../db/models/Usuario");
 
-const {DataTypes, where} = require('sequelize');
+const {DataTypes} = require('sequelize');
 const sequelize = require('../../database/index.js');
 const User = require('../../database/models/user')(sequelize, DataTypes);
 
@@ -25,10 +24,29 @@ controller.one = async(req, res)=>{
 }
 
 controller.create = async(req, res)=>{
-    let usuario = req.body;
-    await User.create(usuario);
-
-    res.send(usuario);
+    try{
+        let usuario = req.body;
+        let existeUsuario = await User.findOne({
+            where:{
+                username: usuario.username
+            }
+        });
+        if(!existeUsuario){
+            await User.create({
+                username: usuario.username,
+                nombre: usuario.nombre,
+                password: usuario.password,
+                apellidos: usuario.apellidos,
+                email: usuario.email
+            });
+            res.send(usuario);
+        }else{
+            res.status(400).json({err: `el usaurio con el nombre ${usuario.username} ya existe`});
+        }
+    }catch(err){
+        console.error(err);
+        res.status(500).send(err);
+    }
 }
 
 controller.alter = async(req, res)=>{

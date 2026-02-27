@@ -22,6 +22,7 @@ const validaciones = {
     }),
 
     alta: Joi.object({
+        id: Joi.number().allow(null),
         username: Joi.string().required(),
         password: Joi.string().required(),
         nombre: Joi.string().required(),
