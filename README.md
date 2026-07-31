@@ -4,9 +4,9 @@
 clone el repositorio e instale las dependencias
 
 ```bash
-npm i
-npm run iniciar
-npm run dev
+# instrucciones para iniciar el proyecto
+bash iniciar.sh
+
 ```
 
 ## Api
