@@ -1,5 +1,4 @@
 const controller = {};
-const db = require("../../db/source/db");
 
 const {DataTypes, where} = require('sequelize');
 const sequelize = require('../../database/index.js');

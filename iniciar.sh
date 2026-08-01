@@ -1,7 +1,4 @@
 #!/bin/bash
-
-cp -r data ../
-# por ahora no lo cambiamos a pnpm
 npm install 
 # corremos las migraciones 
 cd src/database
